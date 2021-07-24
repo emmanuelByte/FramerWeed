@@ -5,7 +5,7 @@ import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { selectEmployeesDetail } from "../redux/user/user.selector";
-import { API_URL } from "../../apiLink";
+import { API_URL } from "../apiLink";
 
 const containerVariants = {
   hidden: {

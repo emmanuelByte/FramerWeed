@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { getAllEmployees } from "../redux/user/user.action";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { API_URL } from "../../apiLink";
+import { API_URL } from "../apiLink";
 
 const UserRow = ({ id, name, phone, email, refreshEmployees }) => {
   const deleteUser = async () => {
