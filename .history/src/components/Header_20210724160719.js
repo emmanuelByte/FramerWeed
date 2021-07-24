@@ -59,7 +59,7 @@ const Header = ({history}) => {
         animate={{ y: -10 }}
         transition={{ delay: 0.2, type: "spring", stiffness: 120 }}
       >
-        <a href="/adduser" className=" pb-4 text-5xl">User Listing UI</a>
+        <a href="/" className=" pb-4 text-5xl">User Listing UI</a>
         <motion.a href="/adduser"
         variants={buttonVariants}
         whileHover="hover"
@@ -68,7 +68,7 @@ const Header = ({history}) => {
         >
         
         
-          Add User
+          <a href="/adduser">Add User</a>
         </motion.a>
       </motion.div>
     </header>
