@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Route, Switch, useLocation } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./components/Home";
 import List from "./components/List";
@@ -14,26 +14,24 @@ import { connect } from "react-redux";
 import { getAllEmployees } from "./redux/user/user.action";
 import { selectEmployeesDetail } from "./redux/user/user.selector";
 
+function App({ getAllEmployees, allEmployees }) {
+  // const location = useLocation();
+  // const showModal = true;
+  const [employees, setEmployees] = useState({});
+  useEffect(() => {
+    const getDetails = async () => {
+      await getAllEmployees();
+      await setEmployees(allEmployees);
+    };
+    getDetails();
+    getDetails();
+    getDetails();
 
-function App({getAllEmployees, allEmployees}) {
-  const location = useLocation();
-  const showModal = true;
-  const [employees, setEmployees] = useState({})
-  useEffect( () => {
-    const getDetails = async() =>{
-      await getAllEmployees()
-      await setEmployees(allEmployees)
-    }
-    getDetails()
-    getDetails()
-    getDetails()
-    
-    
     // return () => {
     //   cleanup
     // }
-  }, [getAllEmployees])
-  console.log(employees)
+  }, [allEmployees, getAllEmployees]);
+  console.log(employees);
 
   return (
     <>
@@ -48,7 +46,7 @@ function App({getAllEmployees, allEmployees}) {
             {/* <Route exact path="/createUpdateUser">
             <Toppings />
           </Route> */}
-            <Route path="/edit:id"  name="order">
+            <Route path="/edit:id" name="order">
               <Order />
             </Route>
             <Route path="/view" exact name="view">
@@ -71,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = createStructuredSelector({
   // contacts: selectCurrentUserContacts
   // users: selectCurrentUser
-  allEmployees: selectEmployeesDetail
+  allEmployees: selectEmployeesDetail,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
