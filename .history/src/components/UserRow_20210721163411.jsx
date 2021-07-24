@@ -1,0 +1,20 @@
+import React from "react";
+
+const UserRow = ({id, name, phone, email}) => {
+  console.log(phone)
+  return (
+    <tr>
+      <td className="px-6">{id}</td>
+      <td className="px-6">{name}</td>
+      <td className="px-6">{phone}</td>
+      <td className=" flex justify-between px-6"><p className="">{email}</p>
+        
+      </td>
+      <button>view</button>
+        <button>edit</button>
+        <button>delete</button>
+    </tr>
+  );
+};
+
+export default UserRow;
