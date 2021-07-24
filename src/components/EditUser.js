@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
-import {withRouter} from 'react-router'
+import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { selectEmployeesDetail } from "../redux/user/user.selector";
-
-
+import { API_URL } from "../../apiLink";
 
 const containerVariants = {
   hidden: {
@@ -38,12 +37,14 @@ const childVariants = {
   },
 };
 
-const Order = ({match,history, allEmployees}) => {
-  console.log(allEmployees)
-  const employee = allEmployees.find((employee)=>(employee._id === match.params.id))
-  console.log(employee)
-  console.log(match.params.id)
-  console.log(match)
+const Order = ({ match, history, allEmployees }) => {
+  console.log(allEmployees);
+  const employee = allEmployees.find(
+    (employee) => employee._id === match.params.id
+  );
+  console.log(employee);
+  console.log(match.params.id);
+  console.log(match);
 
   // console.log(history)
   const [userDetails, setUserDetail] = useState({
@@ -57,32 +58,26 @@ const Order = ({match,history, allEmployees}) => {
   };
 
   const editEmployee = () => {
-    // const res = await axios.post("http://localhost:8090/createuser", {
-    //   name: 'maliq',
-    //   email: 'malaiqjjd',
-    //   phone: '3432323232',
-    // })
-    
-    // console.log(res)
-    // axios.put(`http://localhost:8090/users?${id}`)
     axios({
       method: "put",
-      url: `http://localhost:8090/users/${match.params.id}`,
+      url: `${API_URL}/users/${match.params.id}`,
       data: {
         name: userDetails.name,
         email: userDetails.email,
         phone: userDetails.phone,
       },
-    }).then(() => {
-      console.log("am done editing");
-      setUserDetail({
-        name: "",
-        email: "",
-        phone: "",
+    })
+      .then(() => {
+        console.log("am done editing");
+        setUserDetail({
+          name: "",
+          email: "",
+          phone: "",
+        });
+      })
+      .then(() => {
+        history.push("/");
       });
-    }).then(()=>{
-      history.push('/')
-    });
   };
   console.log(userDetails);
   return (
@@ -125,7 +120,6 @@ const Order = ({match,history, allEmployees}) => {
               placeholder="email"
               id="email"
               value={userDetails.email}
-
             />
           </div>
           <div className="flex flex-col">
@@ -140,14 +134,15 @@ const Order = ({match,history, allEmployees}) => {
               id="phone"
               placeholder="phone number"
               value={userDetails.phone}
-
             />
           </div>
         </motion.form>
-        <button onClick={editEmployee} className="text-xl py-3 active:bg-gray-200 border-2 px-3 rounded-xl mt-6 ">
+        <button
+          onClick={editEmployee}
+          className="text-xl py-3 active:bg-gray-200 border-2 px-3 rounded-xl mt-6 "
+        >
           Update User
         </button>
-        
       </div>
     </motion.div>
   );
@@ -156,7 +151,7 @@ const Order = ({match,history, allEmployees}) => {
 const mapStateToProps = createStructuredSelector({
   // contacts: selectCurrentUserContacts
   // users: selectCurrentUser
-  allEmployees: selectEmployeesDetail
+  allEmployees: selectEmployeesDetail,
 });
 
-export default withRouter( connect(mapStateToProps)(Order));
+export default withRouter(connect(mapStateToProps)(Order));

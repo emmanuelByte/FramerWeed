@@ -5,6 +5,7 @@ import axios from "axios";
 import { getAllEmployees } from "../redux/user/user.action";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import { API_URL } from "../../apiLink";
 
 const containerVariants = {
   hidden: {
@@ -51,7 +52,7 @@ const AddUser = ({ getAllEmployees, history }) => {
     e.preventDefault();
     axios({
       method: "post",
-      url: "http://localhost:8090/users",
+      url: `${API_URL}/users`,
       data: {
         name: userDetails.name,
         email: userDetails.email,
