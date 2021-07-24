@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import Axios from "axios";
+// import Axios from "axios";
 import axios from "axios";
 import { getAllEmployees } from "../redux/user/user.action";
 import { connect } from "react-redux";
@@ -36,7 +36,7 @@ const childVariants = {
   },
 };
 
-const AddUser = ({ getAllEmployees ,history}) => {
+const AddUser = ({ getAllEmployees, history }) => {
   const [userDetails, setUserDetail] = useState({
     name: "",
     email: "",
@@ -48,7 +48,7 @@ const AddUser = ({ getAllEmployees ,history}) => {
   };
   console.log(userDetails);
   const addEmployee = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     axios({
       method: "post",
       url: "http://localhost:8090/users",
@@ -58,18 +58,19 @@ const AddUser = ({ getAllEmployees ,history}) => {
         phone: userDetails.phone,
       },
     })
-    .then((res) => {
-      console.log("am done posting");
-      console.log(res);
-      setUserDetail({
-        name: "",
-        email: "",
-        phone: "",
-      });
-    }).then(() => {
-      history.push('/')
-    })
-    .then(getAllEmployees())
+      .then((res) => {
+        console.log("am done posting");
+        console.log(res);
+        setUserDetail({
+          name: "",
+          email: "",
+          phone: "",
+        });
+      })
+      .then(() => {
+        history.push("/");
+      })
+      .then(getAllEmployees());
   };
 
   return (
@@ -127,13 +128,13 @@ const AddUser = ({ getAllEmployees ,history}) => {
             />
           </div>
         </motion.form>
-              <button
-                onClick={addEmployee}
-                type="submit"
-                className="text-xl cursor-pointer py-3 active:bg-gray-200 border-2 px-3 rounded-xl mt-6 "
-              >
-                Add user
-              </button>
+        <button
+          onClick={addEmployee}
+          type="submit"
+          className="text-xl cursor-pointer py-3 active:bg-gray-200 border-2 px-3 rounded-xl mt-6 "
+        >
+          Add user
+        </button>
         <motion.div variants={childVariants}></motion.div>
       </div>
     </motion.div>
@@ -148,4 +149,4 @@ const mapDispatchToProps = (dispatch) => ({
 //   allEmployees: selectEmployeesDetail
 // });
 
-export default withRouter( connect(null, mapDispatchToProps)(AddUser));
+export default withRouter(connect(null, mapDispatchToProps)(AddUser));
