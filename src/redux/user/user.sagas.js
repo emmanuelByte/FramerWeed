@@ -3,7 +3,7 @@ import { all, call, put, takeLatest } from "redux-saga/effects";
 import UserActionTypes from "./user.types";
 import { loadEmployeesDetails, getAllEmployees } from "./user.action";
 import axios from "axios";
-import { API_URL } from "../../../apiLink";
+import { API_URL } from "../../apiLink";
 
 // add user to app state from database
 export function* getDetails() {
