@@ -1,50 +1,80 @@
-import React from "react";
 import { motion } from "framer-motion";
-// import { Link } from "react-router-dom";
-import { withRouter } from "react-router-dom";
-
-
-
-const buttonVariants = {
-  show: {
-    y: [0, -20],
-    x: 0,
-    textShadow: "0px 0px 8px rgb(255,255,255)",
-    boxShadow: "0px 0px 8px rgb(255,255,255)",
+import React from "react";
+import { Link } from "react-router-dom";
+const svgVarients = {
+  initial: {
+    rotate: -180,
+    // rotateX: 0
+  },
+  animate: {
+    rotate: 0,
+    // rotateX: [0, 180, 0],
+    transition: { duration: 1 },
+  },
+};
+const pathVarients = {
+  initial: {
+    opacity: 0,
+    pathLength: 0,
+  },
+  animate: {
+    pathLength: 1,
+    opacity: 1,
     transition: {
-      duration: 0.3,
-      yoyo: Infinity,
-      ease: "easeOut",
+      duration: 2,
+      ease: "easeInOut",
     },
   },
 };
-
-const Header = ({ history }) => {
-  console.log(history.location.pathname);
+const Header = () => {
   return (
-    <header className="flex p-7 w-full justify-between  items-center">
-      
+    <header>
       <motion.div
-        className=" flex justify-between w-full ml-6 text-xs"
-        initial={{ y: -250 }}
-        animate={{ y: -10 }}
-        transition={{ delay: 0.2, type: "spring", stiffness: 120 }}
+        drag
+        // dragConstraints={{ left: 0, top: 0, bottom: 0, right: 0 }}
       >
-        <a href="/" className=" pb-4 text-5xl">
-          User Listing UI
-        </a>
-        <motion.a
-          href="/adduser"
-          variants={buttonVariants}
-          whileHover="hover"
-          animate={`${history.location.pathname === "/adduser" ? "" : "show"}`}
-          className="text-xl border-2 px-3 rounded-2xl active:bg-gray-200 flex items-center"
-        >
-          Add User
-        </motion.a>
+        <Link to="/" className="logo">
+          <motion.svg
+            className="pizza-svg"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 100 100"
+            variants={svgVarients}
+            initial="initial"
+            animate="animate"
+          >
+            <motion.path
+              variants={pathVarients}
+              fill="none"
+              d="M40 40 L80 40 C80 40 80 80 40 80 C40 80 0 80 0 40 C0 40 0 0 40 0Z"
+            />
+            <motion.path
+              variants={pathVarients}
+              fill="none"
+              d="M50 30 L50 -10 C50 -10 90 -10 90 30 Z"
+            />
+          </motion.svg>
+        </Link>
+      </motion.div>
+
+      <motion.div
+        className="title"
+        animate={{
+          y: -10,
+        }}
+        initial={{
+          y: -260,
+        }}
+        transition={{
+          delay: 0.75,
+          type: "spring",
+          // duration: 0.75,
+          // stiffness: 50,
+        }}
+      >
+        <h1>WEED ARENA</h1>
       </motion.div>
     </header>
   );
 };
 
-export default withRouter(Header);
+export default Header;

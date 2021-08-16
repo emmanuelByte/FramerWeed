@@ -1,75 +1,60 @@
-import React, { useEffect, useState } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import React, { useState } from "react";
+import { Route, Switch, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./components/Home";
-import List from "./components/List";
-import AddUser from "./components/addUser";
-// import Toppings from "./components/Toppings";
-import Order from "./components/EditUser";
-// import Modal from "./components/Modal";
+import Base from "./components/Base";
+import Toppings from "./components/Toppings";
+import Order from "./components/Order";
 import { AnimatePresence } from "framer-motion";
-import Footer from "./components/footer";
-import { createStructuredSelector } from "reselect";
-import { connect } from "react-redux";
-import { getAllEmployees } from "./redux/user/user.action";
-import { selectEmployeesDetail } from "./redux/user/user.selector";
+import Modal from "./components/Modal";
 
-function App({ getAllEmployees, allEmployees }) {
-  // const location = useLocation();
-  // const showModal = true;
-  const [employees, setEmployees] = useState({});
-  useEffect(() => {
-    const getDetails = async () => {
-      await getAllEmployees();
-      await setEmployees(allEmployees);
-    };
-    getDetails();
-    getDetails();
-    getDetails();
+function App() {
+  const [pizza, setPizza] = useState({ base: "", toppings: [] });
+  const [showModal, setShowModal] = useState(false);
+  const location = useLocation();
+  const addBase = (base) => {
+    setPizza({ ...pizza, base });
+  };
 
-    // return () => {
-    //   cleanup
-    // }
-  }, [allEmployees, getAllEmployees]);
-  console.log(employees);
+  const addTopping = (topping) => {
+    let newToppings;
+    if (!pizza.toppings.includes(topping)) {
+      newToppings = [...pizza.toppings, topping];
+    } else {
+      newToppings = pizza.toppings.filter((item) => item !== topping);
+    }
+    setPizza({ ...pizza, toppings: newToppings });
+  };
 
   return (
     <>
       <Header />
-      {/* <Modal showModal={showModal} /> */}
-      <AnimatePresence exitBeforeEnter>
-        <BrowserRouter>
-          <Switch>
-            <Route exact name="home" path="/">
-              <Home />
-            </Route>
-            {/* <Route exact path="/createUpdateUser">
-            <Toppings />
-          </Route> */}
-            <Route path="/edit:id" name="order">
-              <Order />
-            </Route>
-            <Route path="/view" exact name="view">
-              <List />
-            </Route>
-            <Route path="/adduser" exact name="adduser">
-              <AddUser />
-            </Route>
-          </Switch>
-        </BrowserRouter>
+      <Modal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        setPizza={setPizza}
+      />
+      <AnimatePresence
+        exitBeforeEnter
+        onExitComplete={() => setShowModal(false)}
+      >
+        <Switch location={location} key={location.key}>
+          <Route path="/base">
+            <Base addBase={addBase} pizza={pizza} />
+          </Route>
+          <Route path="/toppings">
+            <Toppings addTopping={addTopping} pizza={pizza} />
+          </Route>
+          <Route path="/order">
+            <Order pizza={pizza} setShowModal={setShowModal} />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
       </AnimatePresence>
-      <Footer />
     </>
   );
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  getAllEmployees: () => dispatch(getAllEmployees()),
-});
-const mapStateToProps = createStructuredSelector({
-  // contacts: selectCurrentUserContacts
-  // users: selectCurrentUser
-  allEmployees: selectEmployeesDetail,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

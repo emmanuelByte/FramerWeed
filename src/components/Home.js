@@ -1,94 +1,92 @@
-import React, { useEffect } from "react";
-// import { Link } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-// import Loader from "./Loader";
-// import UserRow from "./UserRow";
-import UserRowHome from "./userRowhome";
-import { selectEmployeesDetail } from "../redux/user/user.selector";
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
-import { getAllEmployees } from "../redux/user/user.action";
-
-const containerVariants = {
-  hidden: {
-    opacity: 0,
-  },
-  visible: {
-    opacity: 1,
-    transition: { delay: 1.5, duration: 1.5 },
-  },
-  exit: {
-    x: "-100vh",
-    transition: { ease: "easeInOut" },
-  },
-};
-// const buttonVariants = {
+// import Container from "./general/Container";
+import Button from "./general/Button";
+import Loader from "./Loader";
+// const ButtonVarients = {
+//   initial: {},
+//   // animate: {
+//   //   x: 0,
+//   //   transition: {
+//   //     yoyo: Infinity,
+//   //   },
+//   // },
 //   hover: {
 //     scale: 1.1,
-//     textShadow: "0px 0px 8px rgb(255,255,255)",
-//     boxShadow: "0px 0px 8px rgb(255,255,255)",
+//     textShadow: "0px 0px 8px white",
 //     transition: {
-//       duration: 0.3,
-//       yoyo: Infinity
-//     }
-//   }
-// }
+//       yoyo: Infinity,
+//       duration: 0.5,
+//     },
+//   },
+//   tap: {
+//     boxShadow: "0px 0px 8px #fff",
+//   },
+// };
+const containerVariants = {
+  animate: {
+    // marginTop: "200px",
+    opacity: 1,
+    rotateX: 0,
+    scale: 1,
+    // rotateZ: 0,
+    // rotateY: 0,
+    transition: {
+      delay: 0.75,
+      duration: 1.2,
+    },
+  },
+  initial: {
+    scale: 0,
 
-const Home = ({ allEmployees, getAllEmployees }) => {
-  // const [employees, setEmployees] = useState([])
-  useEffect(() => {
-    const getDetails = async () => {
-      await getAllEmployees();
-      // await setEmployees(allEmployees)
-    };
-    getDetails();
-
-    // return () => {
-    //   cleanup
-    // }
-  }, [getAllEmployees]);
+    rotateX: 180,
+    // rotateZ: 180,
+    opacity: 0,
+    // rotateY: 180,
+  },
+  exit: {
+    x: "-100vw",
+    transition: {
+      delay: 0.3,
+      ease: "easeInOut",
+    },
+  },
+};
+const Home = () => {
   return (
     <motion.div
-      className="  pb-4 mb-4 border-b-2 border-gray-400 flex flex-col items-center"
       variants={containerVariants}
-      initial="hidden"
-      animate="visible"
+      animate="animate"
+      initial="initial"
+      className="home container"
       exit="exit"
     >
-      <div className="w-3/4 ">
-        <h1 className="text-gray-600 py-6 text-4xl">List of all Users</h1>
-
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead>
-            <tr>
-              <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Id
-              </th>
-              <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Name
-              </th>
-            </tr>
-            {allEmployees.map((employee) => (
-              <UserRowHome
-                name={employee.name}
-                key={employee.id}
-                id={employee._id}
-                email={employee.email}
-                phone={employee.phone}
-              />
-            ))}
-          </thead>
-        </table>
-      </div>
+      <h2
+      // animate={{
+      //   fontSize: "50px",
+      //   color: "#ff2994",
+      //   x: 100,
+      //   y: -100,
+      // }}
+      >
+        Welcome to Weed Joint
+      </h2>
+      <Link to="/base">
+        <Button
+          x={0}
+          // variants={ButtonVarients}
+          // // animate="animate"
+          // initial="initial"
+          // whileHover="hover"
+          // whileTap="tap"
+        >
+          Get Weed
+        </Button>
+      </Link>
+      <Loader />
     </motion.div>
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  getAllEmployees: () => dispatch(getAllEmployees()),
-});
-const mapStateToProps = createStructuredSelector({
-  allEmployees: selectEmployeesDetail,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;
