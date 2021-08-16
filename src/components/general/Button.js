@@ -35,7 +35,7 @@ const Button = ({ children, x, ...props }) => {
       animate="animate"
       initial="initial"
       whileHover="hover"
-      whileTap="tap"
+      whileTap="hover"
       {...props}
     >
       {children}

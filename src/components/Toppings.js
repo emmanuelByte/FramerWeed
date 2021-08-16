@@ -52,7 +52,8 @@ const Toppings = ({ addTopping, pizza }) => {
                 originX: 0,
               }}
               whileTap={{
-                scale: 1,
+                scale: 1.3,
+                color: "#fbe112",
               }}
               transition={{
                 type: "spring",
