@@ -7,6 +7,8 @@ import Toppings from "./components/Toppings";
 import Order from "./components/Order";
 import { AnimatePresence } from "framer-motion";
 import Modal from "./components/Modal";
+import InView from "./components/View";
+import Footer from "./components/footer/footer";
 
 function App() {
   const [pizza, setPizza] = useState({ base: "", toppings: [] });
@@ -48,10 +50,12 @@ function App() {
           <Route path="/order">
             <Order pizza={pizza} setShowModal={setShowModal} />
           </Route>
-          <Route path="/">
+          <Route path="/" exact>
             <Home />
           </Route>
+          <Route path="*" render={() => <InView />} />
         </Switch>
+        <Footer />
       </AnimatePresence>
     </>
   );
