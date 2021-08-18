@@ -7,7 +7,6 @@ function FadeInWhenVisible({ children }) {
   const controls = useAnimation();
   // const [ ref, inView ] = useInView();
   const { ref, inView } = useInView({ threshold: 0.3 });
-  const animation = useAnimation();
   useEffect(() => {
     if (inView) {
       console.log(inView);

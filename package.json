@@ -1,5 +1,5 @@
 {
-  "name": "listings",
+  "name": "weedy",
   "version": "0.1.0",
   "private": true,
   "proxy": "https://userlistingmaster.herokuapp.com/",
